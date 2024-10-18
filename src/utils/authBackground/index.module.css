@@ -1,0 +1,66 @@
+.container {
+    overflow: hidden;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    background-color: #17A2B8;
+    font-family: "Open Sans", sans-serif;
+
+    .banner {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .iconAndText {
+            width: 400px;
+            max-width: 100%;
+            height: 450px;
+
+            .icon{
+                position: relative;
+                height: 80%;
+                width: 100%;
+
+                .circle {
+                    width: 72%;
+                    height: 80%;
+                    background: #317F8B;
+                    border-radius: 50%;
+                    position: relative; 
+                    margin: 0 auto;
+                }
+
+                .image{
+                    position: absolute;
+                    top: 40px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    object-fit: contain;
+                }
+            }
+
+            .text{
+
+                text-align: center;
+                color: white;
+                height: 20%;
+
+                h3 {
+                    font-size: 1.91rem;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+    }
+
+    .form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        background-color: white;
+    }
+}
