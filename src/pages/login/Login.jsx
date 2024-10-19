@@ -70,7 +70,7 @@ function Login() {
           if (res.status == 200) {
             localStorage.setItem("token", res.headers["x-token"]);
             localStorage.setItem("name", res.headers.name);
-            navigate("/homepage", { state: { from: "login" } });
+            navigate("/homepage/dashboard", { state: { from: "login" } });
           } else {
             toast.error(res.data.msg);
           }

@@ -1,0 +1,81 @@
+.container {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 25px 18px 25px;
+
+        h2{
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        span{
+            color: #707070;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+    }
+
+    .headingAndFilter{
+        display: flex;
+        padding: 10px 25px;
+        position: relative;
+
+        h3{
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .addPeople {
+            font-size: 11px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+
+            img {
+                width: 15px;
+            }
+
+            span {
+                margin-top: 2px;
+                color: #707070
+            }
+        }
+
+        .addPeople:hover {
+            transform: scale(1.03);
+        }
+
+        select {
+            position:absolute;
+            right: 25px;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+
+        }
+    }
+
+    .board{
+        height: 100%;
+        margin-top: 1vw;
+        overflow-x: auto;
+        height: 100%;
+
+        .allBoards{
+            width: 100%;
+            height: inherit;
+            padding: 0px 0px 0px 25px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+    }   
+}

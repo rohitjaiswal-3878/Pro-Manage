@@ -103,7 +103,7 @@ function Register() {
           if (res.status == 201) {
             localStorage.setItem("token", res.headers["x-token"]);
             localStorage.setItem("name", res.headers.name);
-            navigate("/homepage", { state: { from: "register" } });
+            navigate("/homepage/dashboard", { state: { from: "register" } });
           } else {
             toast.error(res.data.msg);
           }
