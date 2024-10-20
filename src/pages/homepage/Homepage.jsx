@@ -10,6 +10,7 @@ import analyticsIcon from "../../assets/analytics.svg";
 import settingsIcon from "../../assets/settings.svg";
 import logoutIcon from "../../assets/Logout.svg";
 import { useState } from "react";
+import Create from "../../components/create/Create";
 
 function Homepage() {
   const { state } = useLocation();
@@ -118,7 +119,7 @@ function Homepage() {
       <div className={styles.mainSection}>
         <Outlet />
       </div>
-
+      <Create></Create>
       <Toaster />
     </div>
   );
