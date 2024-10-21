@@ -30,7 +30,12 @@ const loginUser = async (formData) => {
 const getEmails = async (enteredEmail) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_APP_BACKEND}/auth/filter/${enteredEmail || "*"}`
+      `${import.meta.env.VITE_APP_BACKEND}/auth/filter/${enteredEmail || "*"}`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
     );
 
     return response;

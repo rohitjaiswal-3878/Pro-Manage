@@ -8,6 +8,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import toast, { Toaster } from "react-hot-toast";
 import { getEmails } from "../../apis/auth";
+import { createTask } from "../../apis/task";
 
 function Create({ onClose }) {
   const [toggleAssign, setToggleAssign] = useState(false);
@@ -23,6 +24,8 @@ function Create({ onClose }) {
   const [userEmails, setUserEmails] = useState([]);
   const [userEmailLoader, setUserEmailLoader] = useState(false);
   const [assignSearch, setAssignSearch] = useState("");
+  const [errors, setErrors] = useState("");
+  const [loader, setLoader] = useState(false);
 
   // Handle due date.
   const handleDueDate = (e) => {
@@ -30,7 +33,7 @@ function Create({ onClose }) {
     const selected = new Date(e);
     if (current < selected) {
       onChange(e);
-      setFormData({ ...formData, due: selected.toISOString() });
+      setFormData({ ...formData, due: selected.toDateString() });
     } else {
       onChange("");
       setFormData({ ...formData, due: "" });
@@ -110,6 +113,57 @@ function Create({ onClose }) {
     setFormData({ ...formData });
   };
 
+  // Handle task save
+  const handleTaskSave = () => {
+    let err = 0;
+    setErrors("");
+
+    const { title, priority, checklist, due, assign } = formData;
+    let msg = "";
+    if (title == "") {
+      err++;
+      msg += " Title is required!";
+    }
+    if (priority == "") {
+      err++;
+      msg += " Priority is required!";
+    }
+    if (checklist.length == 0) {
+      err++;
+      msg += " Atleast one item in checklist is required!";
+    } else {
+      let listErr = 0;
+      checklist.map((item, index) => {
+        if (item.item == "") {
+          listErr++;
+        }
+      });
+
+      if (listErr > 0) {
+        err++;
+        msg += " Checklist item text input should not be empty!";
+      }
+    }
+
+    if (err == 0) {
+      setErrors("");
+      setLoader(true);
+
+      createTask(formData)
+        .then((res) => {
+          setLoader(false);
+          if (res.status == 201) {
+            toast.success("Task created successfully!");
+            onClose();
+          } else {
+            toast.error("Something went wrong while task creation!");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setErrors(msg);
+    }
+  };
   return (
     <Modal>
       <div
@@ -255,6 +309,7 @@ function Create({ onClose }) {
                   onChange={(e) => handleChecklistChanges(e, index)}
                   name="item"
                   value={listItem.item}
+                  placeholder="Task to be done"
                 />
                 <img
                   src={deleteIcon}
@@ -292,13 +347,30 @@ function Create({ onClose }) {
               </span>
             )}
           </button>
+
           <div className={styles.cancelSave}>
-            <button className={styles.cancel} onClick={onClose}>
+            <button
+              className={styles.cancel}
+              onClick={onClose}
+              disabled={loader}
+            >
               Cancel
             </button>
-            <button className={styles.save}>Save</button>
+            <button
+              className={styles.save}
+              onClick={handleTaskSave}
+              disabled={loader}
+              style={{
+                padding: loader ? "5px 0px" : "",
+              }}
+            >
+              {loader ? <div id="loader"></div> : "Save"}
+            </button>
           </div>
         </div>
+
+        {/* Error message*/}
+        {errors && <div className={styles.error}>{errors}</div>}
 
         {toggleDate && (
           <div className={styles.calender}>

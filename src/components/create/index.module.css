@@ -206,7 +206,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
 
             .listItem {
                 border: 1px solid #E2E2E2;
@@ -286,9 +286,10 @@
 
     .dueCancelPost {
         position: absolute;
-        bottom: 25px;
+        bottom: 30px;
         width: 93%;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         margin-top: 20px;
         
@@ -303,7 +304,8 @@
         }
 
         .cancelSave {
-
+            display: flex;
+            align-items: center;
             button {
                 width: 125px;
                 padding: 9px 0px;
@@ -338,6 +340,15 @@
         left: 50%;
         transform: translate(-50%, -50%);
         box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+        width: 90%;
+        font-size: 0.65rem;
+        position: absolute;
+        bottom: 14px;
     }
 
 }
