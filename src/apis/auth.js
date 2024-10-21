@@ -27,4 +27,17 @@ const loginUser = async (formData) => {
   }
 };
 
-export { loginUser, registerUser };
+const getEmails = async (enteredEmail) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/auth/filter/${enteredEmail || "*"}`
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+
+export { loginUser, registerUser, getEmails };

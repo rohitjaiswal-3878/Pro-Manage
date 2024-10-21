@@ -6,9 +6,11 @@ import Backlog from "../backlog/Backlog";
 import Todo from "../todo/Todo";
 import Progress from "../progress/Progress";
 import Done from "../done/Done";
+import Create from "../create/Create";
 
 function Dashboard() {
   const [date, setDate] = useState("");
+  const [createTask, setCreateTask] = useState(false);
 
   // Getting current date.
   useEffect(() => {
@@ -48,11 +50,13 @@ function Dashboard() {
       <div className={styles.board}>
         <div className={styles.allBoards}>
           <Backlog />
-          <Todo />
+          <Todo setCreateTask={setCreateTask} />
           <Progress />
           <Done />
         </div>
       </div>
+
+      {createTask && <Create onClose={() => setCreateTask(false)}></Create>}
     </div>
   );
 }

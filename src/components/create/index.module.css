@@ -110,6 +110,14 @@
                 border-radius: 5px;
                 font-size: 0.9rem;
                 cursor: pointer;
+
+                #assign {
+                    height: 100%;
+                    width: 90%;
+                    outline: none;
+                    font-size: 0.9rem;
+                    border: none;
+                }
             }
 
             .options {
@@ -138,13 +146,14 @@
                         align-items: center;
                         justify-content: center;
                         background-color: #FFEBEB;
+                        font-size: 1rem;
                     }
 
                     .user {
                         width: 55%;
                         font-size: 0.9rem;
                         font-weight: 550;
-
+                        color: #20102B;
                     }
 
                     button {
@@ -160,6 +169,14 @@
                     button:hover {
                         transform: scale(1.02);
                     }
+                }
+
+                .noMatch {
+                    width: 99%;
+                    display: inline-block;
+                    text-align: center;
+                    color: #777575;
+                    font-size: 0.7rem;
                 }
             }
 
@@ -185,7 +202,7 @@
 
         .list{
             margin-top: 10px;
-            height: 150px;
+            max-height: 150px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -268,6 +285,9 @@
     }
 
     .dueCancelPost {
+        position: absolute;
+        bottom: 25px;
+        width: 93%;
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
