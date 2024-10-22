@@ -3,7 +3,7 @@ import Modal from "../../utils/modal/Modal";
 import styles from "./index.module.css";
 import selectIcon from "../../assets/select.svg";
 import { useState } from "react";
-import deleteIcon from "../../assets/delete.svg";
+import deleteIcon from "../../assets/Delete.svg";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import toast, { Toaster } from "react-hot-toast";

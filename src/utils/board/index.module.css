@@ -27,4 +27,8 @@
             gap: 10px;
         }
     }
+
+    .mainSection{
+        padding: 14px;
+    }
 }

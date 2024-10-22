@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 import minIcon from "../../assets/minimize.svg";
+import Task from "../task/Task";
 
 function Board({ children }) {
   return (
@@ -11,6 +12,12 @@ function Board({ children }) {
           {children[1]} {children[2]}
         </div>
       </div>
+
+      <div className={styles.mainSection}>
+        <Task />
+      </div>
+
+
     </div>
   );
 }

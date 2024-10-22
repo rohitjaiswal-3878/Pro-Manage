@@ -2,6 +2,7 @@ import React from "react";
 import Board from "../../utils/board/Board";
 import addIcon from "../../assets/add.svg";
 import minIcon from "../../assets/minimize.svg";
+import Task from "../../utils/task/Task";
 
 function Todo({ setCreateTask }) {
   return (
