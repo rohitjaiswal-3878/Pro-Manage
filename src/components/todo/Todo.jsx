@@ -6,7 +6,7 @@ import Task from "../../utils/task/Task";
 
 function Todo({ setCreateTask }) {
   return (
-    <Board>
+    <Board boardType={"todo"}>
       <span>To do</span>
       <img src={addIcon} alt="" onClick={() => setCreateTask(true)} />
       <img src={minIcon} alt="" />

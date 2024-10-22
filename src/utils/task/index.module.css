@@ -1,51 +1,136 @@
 .container {
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    box-sizing: border-box;
-    padding: 10px 15px;
-    border-radius: 1rem;
-    background-color: white;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 10px 15px 15px 15px;
+  border-radius: 1rem;
+  background-color: white;
+  flex-direction: column;
+  display: inline-block;
+  overflow: visible;
 
-    .heading {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        .priority {
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            color: #707070;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+    .priority {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      color: #707070;
+      display: flex;
+      align-items: center;
+      gap: 5px;
 
-            span {
-                margin-top:1px;
-            }
+      span {
+        margin-top: 1px;
+      }
 
-            .color {
-                width: 9px;
-                height: 9px;
-                background-color: black;
-                border-radius: 50%;
-            }
-        }
-
-        .more {
-            width: 15px;
-            height: 20px;
-            cursor: pointer;
-        }
-        .more:hover {
-            transform: scale(1.1);
-        }
+      .color {
+        width: 9px;
+        height: 9px;
+        background-color: black;
+        border-radius: 50%;
+      }
     }
 
-    .title {
-        font-weight: 500;
-        margin-top: 5px;
-        font-size: 1.05rem;
+    .more {
+      width: 15px;
+      height: 20px;
+      cursor: pointer;
     }
+    .more:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .title {
+    font-weight: 500;
+    margin-top: 5px;
+    font-size: 1.05rem;
+  }
+
+  .checklist {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    align-items: center;
+    img {
+      cursor: pointer;
+      width: 22px;
+    }
+  }
+
+  .listItem {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+    .item {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      gap: 5px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.2px solid #e2e2e2;
+      white-space: wrap;
+
+      .customCheckbox {
+        position: relative;
+        input {
+          appearance: none;
+          -webkit-appearance: none;
+          height: 1.1rem;
+          width: 1.1rem;
+          background-color: #fff;
+          border-radius: 6px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+          border: 1.3px solid #e2e2e2;
+        }
+      }
+    }
+  }
+
+  .dateBacklogProgressDone {
+    margin-top: 10px;
+    font-size: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #767575;
+
+    .date,
+    .backlog,
+    .progress,
+    .done {
+      background-color: #eeecec;
+      border-radius: 8px;
+      height: 22px;
+      padding: 0px 8px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .date {
+      background-color: #dbdbdb;
+      color: #5a5a5a;
+    }
+
+    .backlogProgressDone {
+      display: flex;
+      gap: 5px;
+      text-transform: uppercase;
+      align-items: center;
+    }
+  }
 }
