@@ -7,10 +7,15 @@ import Todo from "../todo/Todo";
 import Progress from "../progress/Progress";
 import Done from "../done/Done";
 import Create from "../create/Create";
+import { getTasks } from "../../apis/task";
+import toast from "react-hot-toast";
+import boardContext from "../../context/dashboard";
 
 function Dashboard() {
   const [date, setDate] = useState("");
   const [createTask, setCreateTask] = useState(false);
+  const [loadTask, setLoadTask] = useState(false);
+  const [tasks, setTasks] = useState({});
 
   // Getting current date.
   useEffect(() => {
@@ -27,6 +32,18 @@ function Dashboard() {
     else ordinal = "th";
     setDate(day + ordinal + " " + month + ", " + year);
   }, []);
+
+  useEffect(() => {
+    getTasks()
+      .then((res) => {
+        if (res.status == 200) {
+          setTasks({ ...res.data });
+        } else {
+          toast.error("Something went wrong while loading board tasks!!");
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [loadTask]);
 
   return (
     <div className={styles.container}>
@@ -47,16 +64,24 @@ function Dashboard() {
         </select>
       </div>
 
-      <div className={styles.board}>
-        <div className={styles.allBoards}>
-          <Backlog />
-          <Todo setCreateTask={setCreateTask} />
-          <Progress />
-          <Done />
+      <boardContext.Provider value={{ loadTask, setLoadTask }}>
+        <div className={styles.board}>
+          <div className={styles.allBoards}>
+            <Backlog backlogs={tasks.backlog} />
+            <Todo setCreateTask={setCreateTask} todos={tasks.todo} />
+            <Progress progresses={tasks.progress} />
+            <Done dones={tasks.done} />
+          </div>
         </div>
-      </div>
+      </boardContext.Provider>
 
-      {createTask && <Create onClose={() => setCreateTask(false)}></Create>}
+      {createTask && (
+        <Create
+          onClose={() => setCreateTask(false)}
+          setLoadTask={setLoadTask}
+          loadTask={loadTask}
+        ></Create>
+      )}
     </div>
   );
 }

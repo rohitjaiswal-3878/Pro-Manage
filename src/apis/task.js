@@ -21,4 +21,40 @@ const createTask = async (formData) => {
   }
 };
 
-export { createTask };
+const getTasks = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/task/tasks`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+
+const updateTask = async (task) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_BACKEND}/task/change`,
+      { task },
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.repsonse;
+  }
+};
+export { createTask, getTasks, updateTask };

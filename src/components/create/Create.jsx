@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { getEmails } from "../../apis/auth";
 import { createTask } from "../../apis/task";
 
-function Create({ onClose }) {
+function Create({ onClose, setLoadTask, loadTask }) {
   const [toggleAssign, setToggleAssign] = useState(false);
   const [toggleDate, setToggleDate] = useState(false);
   const [value, onChange] = useState("");
@@ -154,6 +154,7 @@ function Create({ onClose }) {
           setLoader(false);
           if (res.status == 201) {
             toast.success("Task created successfully!");
+            setLoadTask(!loadTask);
             onClose();
           } else {
             toast.error("Something went wrong while task creation!");

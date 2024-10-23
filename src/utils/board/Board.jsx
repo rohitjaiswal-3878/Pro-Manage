@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.css";
 import minIcon from "../../assets/minimize.svg";
 import Task from "../task/Task";
 
-function Board({ children, boardType }) {
+function Board({ children, data, seeMore, setSeeMore }) {
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
@@ -13,12 +13,18 @@ function Board({ children, boardType }) {
         </div>
       </div>
 
-      {boardType == "todo" && (
-        <div className={styles.mainSection}>
-          {" "}
-          <Task /> <Task /> <Task /> <Task /> <Task />{" "}
-        </div>
-      )}
+      <div className={styles.mainSection}>
+        {data &&
+          data.map((task, index) => (
+            <Task
+              task={task}
+              key={index}
+              seeMore={seeMore}
+              setSeeMore={setSeeMore}
+              idx={index}
+            />
+          ))}
+      </div>
     </div>
   );
 }

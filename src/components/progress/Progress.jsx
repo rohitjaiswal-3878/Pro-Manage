@@ -1,12 +1,15 @@
 import React from "react";
 import Board from "../../utils/board/Board";
 import minIcon from "../../assets/minimize.svg";
+import { useState } from "react";
 
-function Progress() {
+function Progress({ progresses }) {
+  const [seeMore, setSeeMore] = useState([]);
+
   return (
-    <Board>
+    <Board data={progresses} seeMore={seeMore} setSeeMore={setSeeMore}>
       <span>Progress</span>
-      <img src={minIcon} alt="" />
+      <img src={minIcon} alt="" onClick={() => setSeeMore([])} />
     </Board>
   );
 }

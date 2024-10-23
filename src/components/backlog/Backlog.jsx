@@ -1,12 +1,15 @@
 import React from "react";
 import Board from "../../utils/board/Board";
 import minIcon from "../../assets/minimize.svg";
+import { useState } from "react";
 
-function Backlog() {
+function Backlog({ backlogs }) {
+  const [seeMore, setSeeMore] = useState([]);
+
   return (
-    <Board>
+    <Board data={backlogs} seeMore={seeMore} setSeeMore={setSeeMore}>
       <span>Backlog</span>
-      <img src={minIcon} alt="" />
+      <img src={minIcon} alt="" onClick={() => setSeeMore([])} />
     </Board>
   );
 }
