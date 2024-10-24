@@ -77,6 +77,11 @@ function Task({ task, seeMore, setSeeMore, idx }) {
             }}
           ></div>
           <span>{task.priority} priority</span>
+          {task.assignTo && (
+            <div className={styles.assignIcon}>
+              {task.assignTo.substring(0, 2).toUpperCase()}
+            </div>
+          )}
         </div>
         <img src={moreIcon} alt="more icon" className={styles.more} />
       </div>

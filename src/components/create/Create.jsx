@@ -20,6 +20,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
     checklist: [],
     due: "",
     assign: [],
+    assignTo: "",
   });
   const [userEmails, setUserEmails] = useState([]);
   const [userEmailLoader, setUserEmailLoader] = useState(false);
@@ -65,8 +66,8 @@ function Create({ onClose, setLoadTask, loadTask }) {
       setUserEmailLoader(true);
     } else {
       setToggleAssign(false);
-      setFormData({ ...formData, assign: [] });
     }
+    setFormData({ ...formData, assignTo: "" });
 
     searchEmail(value);
   };
@@ -260,7 +261,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
                       <span className={styles.user}>{email.email}</span>
                       <button
                         onClick={() => {
-                          setFormData({ ...formData, assign: [email.email] });
+                          setFormData({ ...formData, assignTo: email.email });
                           setAssignSearch(email.email);
                           setToggleAssign(false);
                         }}
@@ -374,7 +375,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
         {errors && <div className={styles.error}>{errors}</div>}
 
         {toggleDate && (
-          <div className={styles.calender}>
+          <div className={styles.calender} onClick={(e) => e.stopPropagation()}>
             <Calendar onChange={(e) => handleDueDate(e)} value={value} />
           </div>
         )}
