@@ -19,7 +19,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
     priority: "",
     checklist: [],
     due: "",
-    assign: "",
+    assign: [],
   });
   const [userEmails, setUserEmails] = useState([]);
   const [userEmailLoader, setUserEmailLoader] = useState(false);
@@ -65,7 +65,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
       setUserEmailLoader(true);
     } else {
       setToggleAssign(false);
-      setFormData({ ...formData, assign: "" });
+      setFormData({ ...formData, assign: [] });
     }
 
     searchEmail(value);
@@ -260,7 +260,7 @@ function Create({ onClose, setLoadTask, loadTask }) {
                       <span className={styles.user}>{email.email}</span>
                       <button
                         onClick={() => {
-                          setFormData({ ...formData, assign: email.email });
+                          setFormData({ ...formData, assign: [email.email] });
                           setAssignSearch(email.email);
                           setToggleAssign(false);
                         }}

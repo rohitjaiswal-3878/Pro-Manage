@@ -14,6 +14,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   const [latestState, setLatestState] = useState(false);
   const interval = useRef(null);
 
+  // Format the due date.
   useEffect(() => {
     if (task.due) {
       const date = new Date(task.due);
@@ -30,6 +31,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
     }
   }, [task, latestState]);
 
+  // Handle the board switch.
   const handleBoardSwitch = (board) => {
     if (board != task.board) {
       task.board = board;
@@ -43,12 +45,14 @@ function Task({ task, seeMore, setSeeMore, idx }) {
     }
   };
 
+  // Handle checkbix updates.
   const handleCheckbox = (e, i) => {
     task.checklist[i].checked = e.target.checked;
     setLatestState(!latestState);
     updateTaskInDB(task);
   };
 
+  // Updates the checkbox state in db.
   function updateTaskInDB(data) {
     clearTimeout(interval.current);
     interval.current = setTimeout(() => {
@@ -58,6 +62,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
 
   return (
     <div className={styles.container}>
+      {/* Heading */}
       <div className={styles.heading}>
         <div className={styles.priority}>
           <div
@@ -76,12 +81,14 @@ function Task({ task, seeMore, setSeeMore, idx }) {
         <img src={moreIcon} alt="more icon" className={styles.more} />
       </div>
 
+      {/* Title */}
       <h3 className={styles.title}>
         {task.title.length > 50
           ? task.title.substring(0, 50) + "..."
           : task.title}
       </h3>
 
+      {/* Cheklist heading. */}
       <div className={styles.checklist}>
         <span>
           Checklist &#40;{task.checklist.filter((e) => e.checked).length}/
@@ -100,6 +107,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
         />
       </div>
 
+      {/* Checklist item. */}
       {seeMore.includes(idx) && (
         <div className={styles.listItem}>
           {task.checklist.map((item, index) => (
@@ -121,6 +129,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
         </div>
       )}
 
+      {/* Due date and switch board buttons. */}
       <div className={styles.dateBacklogProgressDone}>
         <div
           className={styles.date}
@@ -132,24 +141,43 @@ function Task({ task, seeMore, setSeeMore, idx }) {
         </div>
 
         <div className={styles.backlogProgressDone}>
-          <div
-            className={styles.backlog}
-            onClick={() => handleBoardSwitch("backlog")}
-          >
-            Backlog
-          </div>
-          <div
-            className={styles.progress}
-            onClick={() => handleBoardSwitch("progress")}
-          >
-            progress
-          </div>
-          <div
-            className={styles.done}
-            onClick={() => handleBoardSwitch("done")}
-          >
-            done
-          </div>
+          {task.board != "backlog" && (
+            <div
+              className={styles.backlog}
+              onClick={() => {
+                handleBoardSwitch("backlog");
+              }}
+            >
+              Backlog
+            </div>
+          )}
+
+          {task.board != "progress" && (
+            <div
+              className={styles.progress}
+              onClick={() => handleBoardSwitch("progress")}
+            >
+              progress
+            </div>
+          )}
+
+          {task.board != "done" && (
+            <div
+              className={styles.done}
+              onClick={() => handleBoardSwitch("done")}
+            >
+              done
+            </div>
+          )}
+
+          {task.board != "todo" && (
+            <div
+              className={styles.done}
+              onClick={() => handleBoardSwitch("todo")}
+            >
+              todo
+            </div>
+          )}
         </div>
       </div>
     </div>

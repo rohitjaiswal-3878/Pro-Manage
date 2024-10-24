@@ -10,12 +10,14 @@ import Create from "../create/Create";
 import { getTasks } from "../../apis/task";
 import toast from "react-hot-toast";
 import boardContext from "../../context/dashboard";
+import AddPeople from "../addPeople/AddPeople";
 
 function Dashboard() {
   const [date, setDate] = useState("");
   const [createTask, setCreateTask] = useState(false);
   const [loadTask, setLoadTask] = useState(false);
   const [tasks, setTasks] = useState({});
+  const [addPeopleState, setAddPeopleState] = useState(false);
 
   // Getting current date.
   useEffect(() => {
@@ -53,7 +55,10 @@ function Dashboard() {
       </div>
       <div className={styles.headingAndFilter}>
         <h3>Board</h3>
-        <div className={styles.addPeople}>
+        <div
+          className={styles.addPeople}
+          onClick={() => setAddPeopleState(true)}
+        >
           <img src={peopleIcon} alt="People icon" />
           <span>Add people</span>
         </div>
@@ -82,6 +87,8 @@ function Dashboard() {
           loadTask={loadTask}
         ></Create>
       )}
+
+      {addPeopleState && <AddPeople setAddPeopleState={setAddPeopleState} />}
     </div>
   );
 }

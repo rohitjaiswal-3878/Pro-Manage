@@ -57,4 +57,24 @@ const updateTask = async (task) => {
     return error.repsonse;
   }
 };
-export { createTask, getTasks, updateTask };
+
+const addPeopleToBoard = async (email) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_BACKEND}/task/add-people`,
+      {
+        email,
+      },
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+export { createTask, getTasks, updateTask, addPeopleToBoard };
