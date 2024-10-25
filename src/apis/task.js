@@ -21,10 +21,10 @@ const createTask = async (formData) => {
   }
 };
 
-const getTasks = async () => {
+const getTasks = async (filter) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_APP_BACKEND}/task/tasks`,
+      `${import.meta.env.VITE_APP_BACKEND}/task/tasks/${filter}`,
       {
         headers: {
           "X-token": localStorage.getItem("token"),

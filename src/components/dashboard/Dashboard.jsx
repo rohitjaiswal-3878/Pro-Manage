@@ -18,6 +18,13 @@ function Dashboard() {
   const [loadTask, setLoadTask] = useState(false);
   const [tasks, setTasks] = useState({});
   const [addPeopleState, setAddPeopleState] = useState(false);
+  const [filter, setFilter] = useState("today");
+
+  // Handle filters.
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+    setLoadTask(!loadTask);
+  };
 
   // Getting current date.
   useEffect(() => {
@@ -36,7 +43,7 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    getTasks()
+    getTasks(filter)
       .then((res) => {
         if (res.status == 200) {
           setTasks({ ...res.data });
@@ -62,10 +69,10 @@ function Dashboard() {
           <img src={peopleIcon} alt="People icon" />
           <span>Add people</span>
         </div>
-        <select name="filter">
+        <select name="filter" onChange={handleFilter} value={filter}>
           <option value="today">Today</option>
           <option value="week">This week</option>
-          <option value="monday">This month</option>
+          <option value="month">This month</option>
         </select>
       </div>
 
