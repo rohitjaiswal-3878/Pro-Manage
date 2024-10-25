@@ -9,7 +9,10 @@ import { useContext } from "react";
 import boardContext from "../../context/dashboard";
 
 function Task({ task, seeMore, setSeeMore, idx }) {
-  const [due, setDue] = useState("");
+  const [due, setDue] = useState({
+    date: "",
+    color: "",
+  });
   const { loadTask, setLoadTask } = useContext(boardContext);
   const [latestState, setLatestState] = useState(false);
   const interval = useRef(null);
@@ -18,6 +21,11 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   useEffect(() => {
     if (task.due) {
       const date = new Date(task.due);
+      const currentDate = new Date();
+      let color = "";
+      if (currentDate > date) {
+        color = "#CF3636";
+      }
       const day = date.toLocaleDateString(undefined, { day: "2-digit" });
       const month = date.toLocaleDateString(undefined, { month: "short" });
 
@@ -27,7 +35,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
       else if (rem == 2) ordinal = "nd";
       else if (rem == 3) ordinal = "rd";
       else ordinal = "th";
-      setDue(month + " " + day + ordinal);
+      setDue({ date: month + " " + day + ordinal, color });
     }
   }, [task, latestState]);
 
@@ -77,11 +85,12 @@ function Task({ task, seeMore, setSeeMore, idx }) {
             }}
           ></div>
           <span>{task.priority} priority</span>
-          {task.assignTo && (
-            <div className={styles.assignIcon}>
-              {task.assignTo.substring(0, 2).toUpperCase()}
-            </div>
-          )}
+          {task.assignTo.assignUser &&
+            task.assignTo.userId == localStorage.getItem("userId") && (
+              <div className={styles.assignIcon}>
+                {task.assignTo.assignUser.substring(0, 2).toUpperCase()}
+              </div>
+            )}
         </div>
         <img src={moreIcon} alt="more icon" className={styles.more} />
       </div>
@@ -139,10 +148,14 @@ function Task({ task, seeMore, setSeeMore, idx }) {
         <div
           className={styles.date}
           style={{
-            visibility: !task.due && "hidden",
+            visibility: !task.due ? "hidden" : !due.date && "hidden",
+            background:
+              task.board == "done" ? "#63C05B" : due.color ? due.color : "",
+            color: task.board == "done" ? "white" : due.color ? "white" : "",
+            fontWeight: "600",
           }}
         >
-          {due && due}
+          {task.due && due.date && due.date}
         </div>
 
         <div className={styles.backlogProgressDone}>

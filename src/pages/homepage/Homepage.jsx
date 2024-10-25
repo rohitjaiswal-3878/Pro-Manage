@@ -107,6 +107,8 @@ function Homepage() {
           onClick={() => {
             localStorage.removeItem("token");
             localStorage.removeItem("name");
+            localStorage.removeItem("userId");
+
             navigate("/login");
           }}
         >
