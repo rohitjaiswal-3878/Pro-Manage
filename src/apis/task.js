@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const createTask = async (formData) => {
   try {
     const response = await axios.post(
@@ -77,4 +76,22 @@ const addPeopleToBoard = async (email) => {
     return error.response;
   }
 };
-export { createTask, getTasks, updateTask, addPeopleToBoard };
+
+const getAnalytics = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/task/analytics`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+export { createTask, getTasks, updateTask, addPeopleToBoard, getAnalytics };

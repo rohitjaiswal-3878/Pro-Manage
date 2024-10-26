@@ -23,7 +23,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
       const date = new Date(task.due);
       const currentDate = new Date();
       let color = "";
-      if (currentDate > date) {
+      if (currentDate.getDate() > date.getDate()) {
         color = "#CF3636";
       }
       const day = date.toLocaleDateString(undefined, { day: "2-digit" });
