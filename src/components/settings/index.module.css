@@ -1,0 +1,80 @@
+.container {
+  font-family: "inter";
+  padding: 25px 0px 25px 25px;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 550;
+  }
+
+  .mainSection {
+    margin-top: 25px;
+    width: 450px;
+    max-width: 100%;
+  }
+
+  form {
+    ::placeholder {
+      color: #828282;
+    }
+
+    div.inputFields {
+      border: 1px solid;
+      height: 43px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 1.5px solid #d0d0d0;
+      display: flex;
+      align-items: center;
+      padding: 0px 5px;
+
+      img {
+        width: 30px;
+      }
+      input {
+        height: 90%;
+        width: 90%;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        padding: 0px 5px;
+      }
+    }
+
+    span.error {
+      display: inline-block;
+      font-size: 0.8rem;
+      text-align: left;
+      padding: 0px 3px;
+      width: 100%;
+      margin: 5px 0px 20px 0px;
+      color: red;
+    }
+
+    button {
+      background-color: #17a2b8;
+      margin: 20px 0px;
+    }
+  }
+
+  button {
+    width: 100%;
+    font-size: 1rem;
+    color: white;
+    height: 43px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+  }
+
+  button.register {
+    background: transparent;
+    border: 1.3px solid #17a2b8;
+    color: #17a2b8;
+    margin-top: 20px;
+  }
+
+  button:hover {
+    transform: scale(1.01, 1.01);
+  }
+}

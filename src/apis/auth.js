@@ -45,4 +45,42 @@ const getEmails = async (enteredEmail) => {
   }
 };
 
-export { loginUser, registerUser, getEmails };
+const getDetails = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/auth/details`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+
+const updateDetails = async (updatedDetails) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_BACKEND}/auth/change`,
+      {
+        updatedDetails,
+      },
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+export { loginUser, registerUser, getEmails, getDetails, updateDetails };

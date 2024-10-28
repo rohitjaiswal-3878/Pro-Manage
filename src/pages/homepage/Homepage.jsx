@@ -120,8 +120,6 @@ function Homepage() {
       <div className={styles.mainSection}>
         <Outlet />
       </div>
-
-      <Toaster />
     </div>
   );
 }

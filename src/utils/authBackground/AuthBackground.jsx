@@ -19,7 +19,6 @@ function AuthBackground({ children }) {
         </div>
       </div>
       <div className={styles.form}>{children}</div>
-      <Toaster />
     </div>
   );
 }

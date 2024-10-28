@@ -7,6 +7,7 @@ import Homepage from "./pages/homepage/Homepage";
 import Dashboard from "./components/dashboard/Dashboard";
 import Analytics from "./components/analytics/Analytics";
 import Settings from "./components/settings/Settings";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           </Route>
           <Route index element={<Navigate to="/homepage/dashboard" />} />
         </Routes>
+        <Toaster />
       </div>
     </BrowserRouter>
   );

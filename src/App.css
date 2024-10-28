@@ -1,56 +1,63 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .app {
-    overflow-x: hidden;
+  overflow-x: hidden;
+  font-family: "inter";
 }
 
 #loader {
-    border: 3px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 3px solid black;
-    width: 18px;
-    height: 18px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-    margin: 0 auto;
-  }
-  
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  .checkmark{
-    display: none;
-    
-  }
-  #checklistCheckbox:checked{
-    background-color: #17A2B8;
-  }
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid black;
+  width: 18px;
+  height: 18px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
 
-
-  #checklistCheckbox:checked ~ .checkmark {
-    display: block;
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
   }
-
-  .checkmark {
-    position: absolute;
-    top: 2.5px;
-    left: 6px;
-    width: 3px;
-    height: 7.5px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    cursor: pointer;
+  100% {
+    -webkit-transform: rotate(360deg);
   }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.checkmark {
+  display: none;
+}
+#checklistCheckbox:checked {
+  background-color: #17a2b8;
+}
+
+#checklistCheckbox:checked ~ .checkmark {
+  display: block;
+}
+
+.checkmark {
+  position: absolute;
+  top: 2.5px;
+  left: 6px;
+  width: 3px;
+  height: 7.5px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  cursor: pointer;
+}
