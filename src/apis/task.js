@@ -94,4 +94,50 @@ const getAnalytics = async () => {
     return error.response;
   }
 };
-export { createTask, getTasks, updateTask, addPeopleToBoard, getAnalytics };
+
+const getTaskById = async (taskId) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/task/single/${taskId}`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+
+const changeTask = async (formData) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_APP_BACKEND}/task/update`,
+      { ...formData },
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
+
+export {
+  createTask,
+  getTasks,
+  updateTask,
+  addPeopleToBoard,
+  getAnalytics,
+  getTaskById,
+  changeTask,
+};

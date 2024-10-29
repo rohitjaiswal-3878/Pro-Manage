@@ -6,7 +6,7 @@ import { useState } from "react";
 import deleteIcon from "../../assets/Delete.svg";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { getEmails } from "../../apis/auth";
 import { createTask } from "../../apis/task";
 

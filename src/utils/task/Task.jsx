@@ -7,6 +7,8 @@ import { useState } from "react";
 import { updateTask } from "../../apis/task";
 import { useContext } from "react";
 import boardContext from "../../context/dashboard";
+import Edit from "../../components/edit";
+import toast from "react-hot-toast";
 
 function Task({ task, seeMore, setSeeMore, idx }) {
   const [due, setDue] = useState({
@@ -16,14 +18,17 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   const { loadTask, setLoadTask } = useContext(boardContext);
   const [latestState, setLatestState] = useState(false);
   const interval = useRef(null);
+  const [dropDown, setDropDown] = useState(false);
+  const [editState, setEditState] = useState(false);
 
   // Format the due date.
   useEffect(() => {
     if (task.due) {
       const date = new Date(task.due);
       const currentDate = new Date();
+
       let color = "";
-      if (currentDate.getDate() > date.getDate()) {
+      if (currentDate > date) {
         color = "#CF3636";
       }
       const day = date.toLocaleDateString(undefined, { day: "2-digit" });
@@ -69,7 +74,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={() => setDropDown(false)}>
       {/* Heading */}
       <div className={styles.heading}>
         <div className={styles.priority}>
@@ -92,7 +97,32 @@ function Task({ task, seeMore, setSeeMore, idx }) {
               </div>
             )}
         </div>
-        <img src={moreIcon} alt="more icon" className={styles.more} />
+
+        <div className={styles.more}>
+          <img
+            src={moreIcon}
+            alt="more icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              setDropDown(!dropDown);
+            }}
+          />
+
+          {dropDown && (
+            <ul className={styles.dropDown}>
+              <li
+                onClick={() => {
+                  setEditState(!editState);
+                  setDropDown(!dropDown);
+                }}
+              >
+                Edit
+              </li>
+              <li>Share</li>
+              <li>Delete</li>
+            </ul>
+          )}
+        </div>
       </div>
 
       {/* Title */}
@@ -198,6 +228,14 @@ function Task({ task, seeMore, setSeeMore, idx }) {
           )}
         </div>
       </div>
+
+      {editState && (
+        <Edit
+          editState={editState}
+          setEditState={setEditState}
+          taskId={task._id}
+        />
+      )}
     </div>
   );
 }
