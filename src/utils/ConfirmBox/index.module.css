@@ -1,0 +1,55 @@
+.container {
+    width: 350px;
+    max-width: 100vw;
+    height: 200px;
+    max-width: 100vh;
+    box-sizing: border-box;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .btns {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+
+        button {
+            width: 100%;
+            height: 46px;
+            border-radius: 0.8rem;
+            outline: none;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            span {
+            font-size: 1rem;
+
+            }
+        }
+
+        .yes {
+            background-color: #17A2B8;
+            color: white;
+        }
+
+        .cancel {
+            border: 1px solid #CF3636;
+            color: #CF3636;
+            background-color: white;
+        }
+
+        button:hover {
+            transform: scale(1.005);
+        }
+    }
+}
+

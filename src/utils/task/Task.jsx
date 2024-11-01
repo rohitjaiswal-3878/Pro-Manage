@@ -4,11 +4,12 @@ import moreIcon from "../../assets/more.svg";
 import arrowDownIcon from "../../assets/arrow-down.svg";
 import arrowUpIcon from "../../assets/arrow-up.svg";
 import { useState } from "react";
-import { updateTask } from "../../apis/task";
+import { deleteTask, updateTask } from "../../apis/task";
 import { useContext } from "react";
 import boardContext from "../../context/dashboard";
 import Edit from "../../components/edit";
 import toast from "react-hot-toast";
+import ConfirmBox from "../confirmBox";
 
 function Task({ task, seeMore, setSeeMore, idx }) {
   const [due, setDue] = useState({
@@ -20,6 +21,8 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   const interval = useRef(null);
   const [dropDown, setDropDown] = useState(false);
   const [editState, setEditState] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
+  const [deleteLoader, setDeleteLoader] = useState(false);
 
   // Format the due date.
   useEffect(() => {
@@ -73,6 +76,33 @@ function Task({ task, seeMore, setSeeMore, idx }) {
     }, 1000);
   }
 
+  // Handle delete.
+  const onDelete = () => {
+    setDeleteLoader(true);
+    deleteTask(task._id).then((res) => {
+      if (res.status == 200) {
+        toast.success(res.data.msg);
+        setLoadTask(!loadTask);
+      } else {
+        toast.error(res.data.msg);
+      }
+      setDeleteState(false);
+      setDeleteLoader(false);
+    });
+  };
+
+  // Cancel delete popup.
+  const onDeleteClose = () => {
+    setDeleteState(false);
+  };
+
+  // Handle share task.
+  const handleShare = () => {
+    let link = window.location.origin + "/task/" + task._id;
+    window.navigator.clipboard.writeText(link);
+    toast.success("Link copied!");
+  };
+
   return (
     <div className={styles.container} onClick={() => setDropDown(false)}>
       {/* Heading */}
@@ -118,8 +148,8 @@ function Task({ task, seeMore, setSeeMore, idx }) {
               >
                 Edit
               </li>
-              <li>Share</li>
-              <li>Delete</li>
+              <li onClick={handleShare}>Share</li>
+              <li onClick={() => setDeleteState(true)}>Delete</li>
             </ul>
           )}
         </div>
@@ -235,6 +265,17 @@ function Task({ task, seeMore, setSeeMore, idx }) {
           setEditState={setEditState}
           taskId={task._id}
         />
+      )}
+
+      {deleteState && (
+        <ConfirmBox
+          onDelete={onDelete}
+          onDeleteClose={onDeleteClose}
+          deleteLoader={deleteLoader}
+        >
+          <span>Are yous sure you want to Delete?</span>
+          <span>Delete</span>
+        </ConfirmBox>
       )}
     </div>
   );

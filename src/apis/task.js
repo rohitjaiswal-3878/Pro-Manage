@@ -132,6 +132,20 @@ const changeTask = async (formData) => {
   }
 };
 
+const deleteTask = async (taskId) => {
+  try {
+    const repsonse = await axios.delete(`${import.meta.env.VITE_APP_BACKEND}/task/remove/${taskId}`, {
+      headers: {
+        "X-token": localStorage.getItem("token"),
+      },
+    })
+
+    return repsonse;
+  } catch (error) {
+    return error.response;
+  }
+}
+
 export {
   createTask,
   getTasks,
@@ -140,4 +154,5 @@ export {
   getAnalytics,
   getTaskById,
   changeTask,
+  deleteTask
 };

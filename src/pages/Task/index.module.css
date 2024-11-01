@@ -1,0 +1,164 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  font-family: "poppins";
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .heading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 60px;
+    padding-top: 20px;
+    gap: 10px;
+
+    span {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+  }
+
+  .task {
+    margin-top: 70px;
+    width: 500px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 500px;
+    border: 2px solid;
+    border-color: #edf5fe;
+    border-radius: 10px;
+    padding: 25px 0px 25px 20px;
+
+    .priority {
+      width: 100%;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      color: #707070;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      span {
+        margin-top: 1px;
+      }
+
+      .symbol {
+        width: 8px;
+        height: 8px;
+        background-color: black;
+        border-radius: 50%;
+      }
+    }
+
+    .title {
+      font-weight: 500;
+      margin-top: 5px;
+      font-size: 1.05rem;
+      display: inline-block;
+      line-break: word;
+      white-space: wrap;
+      width: 100%;
+    }
+
+    .checklist {
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      align-items: center;
+
+      img {
+        cursor: pointer;
+        width: 22px;
+      }
+    }
+
+    .listItem {
+      box-sizing: border-box;
+      margin-top: 10px;
+      display: flex;
+      height: 85%;
+      flex-direction: column;
+      overflow-y: auto;
+      padding-right: 20px;
+      gap: 10px;
+
+      .item {
+        display: flex;
+        align-items: center;
+        font-size: 0.85rem;
+        gap: 5px;
+        padding: 6px;
+        border-radius: 10px;
+        border: 1.2px solid #e2e2e2;
+        white-space: wrap;
+
+        .customCheckbox {
+          position: relative;
+          input {
+            appearance: none;
+            -webkit-appearance: none;
+            height: 1.1rem;
+            width: 1.1rem;
+            background-color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline: none;
+            border: 1.3px solid #e2e2e2;
+          }
+        }
+      }
+    }
+    ::-webkit-scrollbar-track {
+      background: white;
+    }
+  }
+
+  .dueDate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+
+    span {
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .date {
+      background-color: #cf3636;
+      color: white;
+      border-radius: 8px;
+      height: 25px;
+      padding: 0px 8px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.7rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    height: 100svh;
+    width: 100svw;
+    .heading {
+      padding-left: 40px;
+    }
+    .task {
+      width: 90vw;
+      margin-top: 5vh;
+    }
+  }
+}
