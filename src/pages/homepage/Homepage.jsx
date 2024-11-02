@@ -10,6 +10,7 @@ import analyticsIcon from "../../assets/analytics.svg";
 import settingsIcon from "../../assets/settings.svg";
 import logoutIcon from "../../assets/Logout.svg";
 import { useState } from "react";
+import ConfirmBox from "../../utils/confirmBox";
 
 function Homepage() {
   const { state } = useLocation();
@@ -17,11 +18,24 @@ function Homepage() {
   const showOnce = useRef(true);
   const navigate = useNavigate();
 
+  const [logoutState, setLogoutState] = useState(false);
   const [selSection, setSelSection] = useState({
     dashboard: location.pathname == "/homepage/dashboard" ? true : false,
     analytics: location.pathname == "/homepage/analytics" ? true : false,
     settings: location.pathname == "/homepage/settings" ? true : false,
   });
+
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    localStorage.removeItem("userId");
+    toast.success("Logout Successfull!");
+    navigate("/login");
+  };
+
+  const onLogoutClose = () => {
+    setLogoutState(false);
+  };
 
   const handleSelSection = (section) => {
     if (section == "dashboard") {
@@ -105,11 +119,7 @@ function Homepage() {
         <div
           className={styles.logout}
           onClick={() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("name");
-            localStorage.removeItem("userId");
-
-            navigate("/login");
+            setLogoutState(true);
           }}
         >
           <img src={logoutIcon} alt="Logout icon" />
@@ -120,6 +130,17 @@ function Homepage() {
       <div className={styles.mainSection}>
         <Outlet />
       </div>
+
+      {logoutState && (
+        <ConfirmBox
+          handleSubmit={onLogout}
+          onClose={onLogoutClose}
+          loader={false}
+        >
+          <span>Are you sure you want to Logout?</span>
+          <span>Logout</span>
+        </ConfirmBox>
+      )}
     </div>
   );
 }

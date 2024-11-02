@@ -17,6 +17,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
     color: "",
   });
   const { loadTask, setLoadTask } = useContext(boardContext);
+  const { loader, setLoader } = useContext(boardContext);
   const [latestState, setLatestState] = useState(false);
   const interval = useRef(null);
   const [dropDown, setDropDown] = useState(false);
@@ -28,10 +29,22 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   useEffect(() => {
     if (task.due) {
       const date = new Date(task.due);
+      const formatDate = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+      );
       const currentDate = new Date();
-
+      const formatcurrentDate = new Date(
+        Date.UTC(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate(),
+          0,
+          0,
+          0
+        )
+      );
       let color = "";
-      if (currentDate > date) {
+      if (formatcurrentDate > formatDate) {
         color = "#CF3636";
       }
       const day = date.toLocaleDateString(undefined, { day: "2-digit" });
@@ -51,7 +64,7 @@ function Task({ task, seeMore, setSeeMore, idx }) {
   const handleBoardSwitch = (board) => {
     if (board != task.board) {
       task.board = board;
-
+      setLoader(true);
       updateTask(task).then((res) => {
         if (res.status == 200) {
           setSeeMore([]);
@@ -156,10 +169,13 @@ function Task({ task, seeMore, setSeeMore, idx }) {
       </div>
 
       {/* Title */}
-      <h3 className={styles.title}>
+      <h3 className={styles.title + " " + "tooltip"}>
         {task.title.length > 50
           ? task.title.substring(0, 50) + "..."
           : task.title}
+        {task.title.length > 50 && (
+          <span className="tooltiptext">{task.title}</span>
+        )}
       </h3>
 
       {/* Cheklist heading. */}
@@ -210,8 +226,19 @@ function Task({ task, seeMore, setSeeMore, idx }) {
           style={{
             visibility: !task.due ? "hidden" : !due.date && "hidden",
             background:
-              task.board == "done" ? "#63C05B" : due.color ? due.color : "",
-            color: task.board == "done" ? "white" : due.color ? "white" : "",
+              task.board == "done"
+                ? "#63C05B"
+                : due.color
+                ? due.color
+                : task.priority == "high"
+                ? "#CF3636"
+                : "",
+            color:
+              task.board == "done"
+                ? "white"
+                : due.color || task.priority == "high"
+                ? "white"
+                : "",
             fontWeight: "600",
           }}
         >
@@ -269,9 +296,9 @@ function Task({ task, seeMore, setSeeMore, idx }) {
 
       {deleteState && (
         <ConfirmBox
-          onDelete={onDelete}
-          onDeleteClose={onDeleteClose}
-          deleteLoader={deleteLoader}
+          handleSubmit={onDelete}
+          onClose={onDeleteClose}
+          loader={deleteLoader}
         >
           <span>Are yous sure you want to Delete?</span>
           <span>Delete</span>

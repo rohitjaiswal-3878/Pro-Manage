@@ -5,7 +5,7 @@ import { useState } from "react";
 import { addPeopleToBoard } from "../../apis/task";
 import toast from "react-hot-toast";
 
-function AddPeople({ setAddPeopleState }) {
+function AddPeople({ setAddPeopleState, fetchBoardPeople }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -26,6 +26,7 @@ function AddPeople({ setAddPeopleState }) {
 
           if (res.status == 200) {
             setSuccess(true);
+            fetchBoardPeople();
           } else {
             toast.error(res.data.msg);
           }

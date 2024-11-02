@@ -7,7 +7,7 @@ import Todo from "../todo/Todo";
 import Progress from "../progress/Progress";
 import Done from "../done/Done";
 import Create from "../create/Create";
-import { getTasks } from "../../apis/task";
+import { getAssignedBoardUsers, getTasks } from "../../apis/task";
 import toast from "react-hot-toast";
 import boardContext from "../../context/dashboard";
 import AddPeople from "../addPeople/AddPeople";
@@ -18,8 +18,9 @@ function Dashboard() {
   const [loadTask, setLoadTask] = useState(false);
   const [tasks, setTasks] = useState({});
   const [addPeopleState, setAddPeopleState] = useState(false);
-  const [filter, setFilter] = useState("today");
-
+  const [filter, setFilter] = useState("week");
+  const [peopleOnBoard, setPeopleOnBoard] = useState("");
+  const [loader, setLoader] = useState(false);
   // Handle filters.
   const handleFilter = (e) => {
     setFilter(e.target.value);
@@ -42,11 +43,27 @@ function Dashboard() {
     setDate(day + ordinal + " " + month + ", " + year);
   }, []);
 
+  function fetchBoardPeople() {
+    getAssignedBoardUsers().then((res) => {
+      if (res.status == 200) {
+        setPeopleOnBoard(res.data.assigns);
+      } else {
+        console.log(
+          "Something went wrong while loading assigned user on board data!"
+        );
+      }
+    });
+  }
+
   useEffect(() => {
+    fetchBoardPeople();
+
+    setLoader(true);
     getTasks(filter)
       .then((res) => {
         if (res.status == 200) {
           setTasks({ ...res.data });
+          setLoader(false);
         } else {
           toast.error("Something went wrong while loading board tasks!!");
         }
@@ -69,6 +86,24 @@ function Dashboard() {
           <img src={peopleIcon} alt="People icon" />
           <span>Add people</span>
         </div>
+        <div className={styles.peopleOnBoard}>
+          {peopleOnBoard &&
+            peopleOnBoard.map((item, index) => (
+              <div className={styles.assignIcon + " " + "tooltip"} key={index}>
+                {item.substring(0, 2).toUpperCase()}
+                <span
+                  className="tooltiptext"
+                  style={{
+                    width: "auto",
+                    left: "100%",
+                    bottom: "112%",
+                  }}
+                >
+                  {item}
+                </span>
+              </div>
+            ))}
+        </div>
         <select name="filter" onChange={handleFilter} value={filter}>
           <option value="today">Today</option>
           <option value="week">This week</option>
@@ -76,7 +111,9 @@ function Dashboard() {
         </select>
       </div>
 
-      <boardContext.Provider value={{ loadTask, setLoadTask }}>
+      <boardContext.Provider
+        value={{ loadTask, setLoadTask, loader, setLoader }}
+      >
         <div className={styles.board}>
           <div className={styles.allBoards}>
             <Backlog backlogs={tasks.backlog} />
@@ -95,7 +132,12 @@ function Dashboard() {
         ></Create>
       )}
 
-      {addPeopleState && <AddPeople setAddPeopleState={setAddPeopleState} />}
+      {addPeopleState && (
+        <AddPeople
+          setAddPeopleState={setAddPeopleState}
+          fetchBoardPeople={fetchBoardPeople}
+        />
+      )}
     </div>
   );
 }

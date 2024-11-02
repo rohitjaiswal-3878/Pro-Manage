@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 import minIcon from "../../assets/minimize.svg";
 import Task from "../task/Task";
+import { useContext } from "react";
+import boardContext from "../../context/dashboard";
 
 function Board({ children, data, seeMore, setSeeMore }) {
+  const { loader } = useContext(boardContext);
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
@@ -13,18 +16,22 @@ function Board({ children, data, seeMore, setSeeMore }) {
         </div>
       </div>
 
-      <div className={styles.mainSection}>
-        {data &&
-          data.map((task, index) => (
-            <Task
-              task={task}
-              key={index}
-              seeMore={seeMore}
-              setSeeMore={setSeeMore}
-              idx={index}
-            />
-          ))}
-      </div>
+      {loader ? (
+        <div id="loader"></div>
+      ) : (
+        <div className={styles.mainSection}>
+          {data &&
+            data.map((task, index) => (
+              <Task
+                task={task}
+                key={index}
+                seeMore={seeMore}
+                setSeeMore={setSeeMore}
+                idx={index}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 }

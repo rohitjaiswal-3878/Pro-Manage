@@ -13,6 +13,7 @@
 
   .heading {
     position: sticky;
+    z-index: 2;
     top: 0px;
     padding: 15px 15px;
     font-size: 1rem;

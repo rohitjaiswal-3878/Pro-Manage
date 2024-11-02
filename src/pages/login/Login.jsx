@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.css";
 import AuthBackground from "../../utils/authBackground/AuthBackground";
 import mailIcon from "../../assets/mail.png";
@@ -24,6 +24,12 @@ function Login() {
   });
 
   const [togglePassord, setTogglePassword] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/homepage/dashboard");
+    }
+  }, []);
 
   const handleInput = (e) => {
     const name = e.target.name;

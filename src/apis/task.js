@@ -134,17 +134,38 @@ const changeTask = async (formData) => {
 
 const deleteTask = async (taskId) => {
   try {
-    const repsonse = await axios.delete(`${import.meta.env.VITE_APP_BACKEND}/task/remove/${taskId}`, {
-      headers: {
-        "X-token": localStorage.getItem("token"),
-      },
-    })
+    const repsonse = await axios.delete(
+      `${import.meta.env.VITE_APP_BACKEND}/task/remove/${taskId}`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
 
     return repsonse;
   } catch (error) {
     return error.response;
   }
-}
+};
+
+const getAssignedBoardUsers = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_APP_BACKEND}/task/board/users`,
+      {
+        headers: {
+          "X-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+};
 
 export {
   createTask,
@@ -154,5 +175,6 @@ export {
   getAnalytics,
   getTaskById,
   changeTask,
-  deleteTask
+  deleteTask,
+  getAssignedBoardUsers,
 };

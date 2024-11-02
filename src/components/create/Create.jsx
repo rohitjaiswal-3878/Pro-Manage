@@ -31,10 +31,31 @@ function Create({ onClose, setLoadTask, loadTask }) {
   // Handle due date.
   const handleDueDate = (e) => {
     const current = new Date();
+    const formatCurrent = new Date(
+      Date.UTC(
+        current.getFullYear(),
+        current.getMonth(),
+        current.getDate(),
+        0,
+        0,
+        0
+      )
+    );
     const selected = new Date(e);
-    if (current < selected) {
+    const formatSelected = new Date(
+      Date.UTC(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate(),
+        0,
+        0,
+        0
+      )
+    );
+
+    if (formatCurrent <= formatSelected) {
       onChange(e);
-      setFormData({ ...formData, due: selected.toDateString() });
+      setFormData({ ...formData, due: formatSelected });
     } else {
       onChange("");
       setFormData({ ...formData, due: "" });
@@ -349,7 +370,15 @@ function Create({ onClose, setLoadTask, loadTask }) {
               </span>
             )}
           </button>
-
+          <span
+            className={styles.removeDate}
+            onClick={() => {
+              onChange("");
+              setFormData({ ...formData, due: "" });
+            }}
+          >
+            X
+          </span>
           <div className={styles.cancelSave}>
             <button
               className={styles.cancel}

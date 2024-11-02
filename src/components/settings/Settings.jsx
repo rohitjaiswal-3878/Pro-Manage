@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 function Settings() {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
-
+  const [updateLoader, setUpdateLoader] = useState(false);
   const [userDetails, setUserDetails] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -41,6 +41,7 @@ function Settings() {
   });
 
   useEffect(() => {
+    setLoader(true);
     getDetails().then((res) => {
       if (res.status == 200) {
         setFormData({
@@ -49,6 +50,7 @@ function Settings() {
           email: res.data.email,
         });
         setUserDetails(res.data);
+        setLoader(false);
       } else {
         console.log(res);
       }
@@ -123,9 +125,12 @@ function Settings() {
         updateCount++;
       }
 
-      if (updateCount > 1) {
+      if (updateCount == 0) {
+        toast.error("Do some changes before updating!");
+      } else if (updateCount > 1) {
         toast.error("You cannot update two things together!");
       } else if (updateCount == 1 && passwordError == 0) {
+        setUpdateLoader(true);
         updateDetails(formData).then((res) => {
           if (res.status == 200) {
             toast.success("Updated!");
@@ -148,125 +153,136 @@ function Settings() {
       <h2>Settings</h2>
 
       <div className={styles.mainSection}>
-        <form className={styles.registerForm} onSubmit={handleSubmit}>
+        {loader ? (
           <div
+            id="loader"
             style={{
-              marginBottom: errors.name && "0px",
+              marginTop: "30%",
             }}
-            className={styles.inputFields}
-          >
-            <img src={nameIcon} alt="mail" />
-            <input
-              type="text"
-              placeholder="Name"
-              name="name"
-              onChange={handleInput}
-              value={formData.name}
-              autoComplete="off"
-            />
-          </div>
-          {errors.name && <span className={styles.error}>{errors.name}</span>}
-
-          <div
-            className={styles.inputFields}
-            style={{
-              marginBottom: errors.email && "0px",
-            }}
-          >
-            <img src={mailIcon} alt="mail" />
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={handleInput}
-              value={formData.email}
-              autoComplete="off"
-            />
-          </div>
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
-
-          <div
-            className={styles.inputFields}
-            style={{
-              marginBottom: errors.password && "0px",
-            }}
-          >
-            <img src={passwordIcon} alt="mail" />
-            <input
-              type={togglePassord.password ? "text" : "password"}
-              placeholder="Old Password"
-              name="password"
-              onChange={handleInput}
-              value={formData.password}
-            />
-            {togglePassord.password ? (
-              <img
-                src={hideIcon}
-                alt="mail"
-                onClick={() => {
-                  setTogglePassword({ ...togglePassord, password: false });
-                }}
+          ></div>
+        ) : (
+          <form className={styles.registerForm} onSubmit={handleSubmit}>
+            <div
+              style={{
+                marginBottom: errors.name && "0px",
+              }}
+              className={styles.inputFields}
+            >
+              <img src={nameIcon} alt="mail" />
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                onChange={handleInput}
+                value={formData.name}
+                autoComplete="off"
               />
-            ) : (
-              <img
-                src={eyeIcon}
-                alt="mail"
-                onClick={() => {
-                  setTogglePassword({ ...togglePassord, password: true });
-                }}
+            </div>
+            {errors.name && <span className={styles.error}>{errors.name}</span>}
+
+            <div
+              className={styles.inputFields}
+              style={{
+                marginBottom: errors.email && "0px",
+              }}
+            >
+              <img src={mailIcon} alt="mail" />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                onChange={handleInput}
+                value={formData.email}
+                autoComplete="off"
               />
+            </div>
+            {errors.email && (
+              <span className={styles.error}>{errors.email}</span>
             )}
-          </div>
-          {errors.password && (
-            <span className={styles.error}>{errors.password}</span>
-          )}
 
-          <div
-            className={styles.inputFields}
-            style={{
-              marginBottom: errors.newPassword && "0px",
-            }}
-          >
-            <img src={passwordIcon} alt="mail" />
-            <input
-              type={togglePassord.newPassword ? "text" : "password"}
-              placeholder="New Password"
-              name="newPassword"
-              onChange={handleInput}
-              value={formData.newPassword}
-            />
-            {togglePassord.newPassword ? (
-              <img
-                src={hideIcon}
-                alt="mail"
-                onClick={() => {
-                  setTogglePassword({
-                    ...togglePassord,
-                    newPassword: false,
-                  });
-                }}
+            <div
+              className={styles.inputFields}
+              style={{
+                marginBottom: errors.password && "0px",
+              }}
+            >
+              <img src={passwordIcon} alt="mail" />
+              <input
+                type={togglePassord.password ? "text" : "password"}
+                placeholder="Old Password"
+                name="password"
+                onChange={handleInput}
+                value={formData.password}
               />
-            ) : (
-              <img
-                src={eyeIcon}
-                alt="mail"
-                onClick={() => {
-                  setTogglePassword({
-                    ...togglePassord,
-                    newPassword: true,
-                  });
-                }}
-              />
+              {togglePassord.password ? (
+                <img
+                  src={hideIcon}
+                  alt="mail"
+                  onClick={() => {
+                    setTogglePassword({ ...togglePassord, password: false });
+                  }}
+                />
+              ) : (
+                <img
+                  src={eyeIcon}
+                  alt="mail"
+                  onClick={() => {
+                    setTogglePassword({ ...togglePassord, password: true });
+                  }}
+                />
+              )}
+            </div>
+            {errors.password && (
+              <span className={styles.error}>{errors.password}</span>
             )}
-          </div>
-          {errors.newPassword && (
-            <span className={styles.error}>{errors.newPassword}</span>
-          )}
 
-          <button type="submit" disabled={loader}>
-            {loader ? <div id="loader"></div> : "Update"}
-          </button>
-        </form>
+            <div
+              className={styles.inputFields}
+              style={{
+                marginBottom: errors.newPassword && "0px",
+              }}
+            >
+              <img src={passwordIcon} alt="mail" />
+              <input
+                type={togglePassord.newPassword ? "text" : "password"}
+                placeholder="New Password"
+                name="newPassword"
+                onChange={handleInput}
+                value={formData.newPassword}
+              />
+              {togglePassord.newPassword ? (
+                <img
+                  src={hideIcon}
+                  alt="mail"
+                  onClick={() => {
+                    setTogglePassword({
+                      ...togglePassord,
+                      newPassword: false,
+                    });
+                  }}
+                />
+              ) : (
+                <img
+                  src={eyeIcon}
+                  alt="mail"
+                  onClick={() => {
+                    setTogglePassword({
+                      ...togglePassord,
+                      newPassword: true,
+                    });
+                  }}
+                />
+              )}
+            </div>
+            {errors.newPassword && (
+              <span className={styles.error}>{errors.newPassword}</span>
+            )}
+
+            <button type="submit" disabled={updateLoader}>
+              {updateLoader ? <div id="loader"></div> : "Update"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

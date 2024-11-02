@@ -16,14 +16,14 @@ function App() {
     <BrowserRouter>
       <div className="app">
         <Routes>
-          <Route index element={<Login />} path="/login" />
+          <Route element={<Login />} path="/login" />
           <Route element={<Register />} path="/register" />
           <Route element={<Homepage />} path="/homepage/">
             <Route element={<Dashboard />} path="dashboard" />
             <Route element={<Analytics />} path="analytics" />
             <Route element={<Settings />} path="settings" />
           </Route>
-          <Route element={<Navigate to="/homepage/dashboard" />} />
+          <Route index element={<Navigate to="/login" />} />
           <Route element={<TaskPage />} path="/task/:taskId" />
           <Route element={<Error />} path="/error" />
           <Route path="*" element={<Navigate to="/error" />} />

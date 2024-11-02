@@ -26,6 +26,7 @@
     display: flex;
     padding: 10px 25px;
     position: relative;
+    align-items: center;
 
     h3 {
       font-size: 1.5rem;
@@ -52,6 +53,28 @@
 
     .addPeople:hover {
       transform: scale(1.03);
+    }
+
+    .peopleOnBoard {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.5rem;
+      margin-left: 10px;
+      margin-bottom: -3px;
+
+      .assignIcon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.5rem;
+        border-radius: 50%;
+        background-color: #feebeb;
+        color: black;
+        position: relative;
+      }
     }
 
     select {
