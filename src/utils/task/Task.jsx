@@ -9,7 +9,7 @@ import { useContext } from "react";
 import boardContext from "../../context/dashboard";
 import Edit from "../../components/edit";
 import toast from "react-hot-toast";
-import ConfirmBox from "../confirmBox";
+import ConfirmBox from "../ConfirmBox";
 
 function Task({ task, seeMore, setSeeMore, idx }) {
   const [due, setDue] = useState({
