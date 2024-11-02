@@ -9,13 +9,15 @@ function Analytics() {
 
   // Loads the analytics data.
   useEffect(() => {
-    getAnalytics().then((res) => {
-      if (res.status == 200) {
-        setAnalytics({ ...res.data });
-      } else {
-        toast.error("Something went wrong while loading analytics!");
-      }
-    });
+    if (localStorage.getItem("token")) {
+      getAnalytics().then((res) => {
+        if (res.status == 200) {
+          setAnalytics({ ...res.data });
+        } else {
+          toast.error("Something went wrong while loading analytics!");
+        }
+      });
+    }
   }, []);
 
   // Conver the single digit number to 2 digits.

@@ -56,19 +56,20 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    fetchBoardPeople();
-
-    setLoader(true);
-    getTasks(filter)
-      .then((res) => {
-        if (res.status == 200) {
-          setTasks({ ...res.data });
-          setLoader(false);
-        } else {
-          toast.error("Something went wrong while loading board tasks!!");
-        }
-      })
-      .catch((err) => console.log(err));
+    if (localStorage.getItem("token")) {
+      fetchBoardPeople();
+      setLoader(true);
+      getTasks(filter)
+        .then((res) => {
+          if (res.status == 200) {
+            setTasks({ ...res.data });
+            setLoader(false);
+          } else {
+            toast.error("Something went wrong while loading board tasks!!");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   }, [loadTask]);
 
   return (

@@ -78,6 +78,7 @@ function Homepage() {
       navigate("/login");
     }
   }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>

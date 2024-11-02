@@ -41,20 +41,22 @@ function Settings() {
   });
 
   useEffect(() => {
-    setLoader(true);
-    getDetails().then((res) => {
-      if (res.status == 200) {
-        setFormData({
-          ...formData,
-          name: res.data.name,
-          email: res.data.email,
-        });
-        setUserDetails(res.data);
-        setLoader(false);
-      } else {
-        console.log(res);
-      }
-    });
+    if (localStorage.getItem("token")) {
+      setLoader(true);
+      getDetails().then((res) => {
+        if (res.status == 200) {
+          setFormData({
+            ...formData,
+            name: res.data.name,
+            email: res.data.email,
+          });
+          setUserDetails(res.data);
+          setLoader(false);
+        } else {
+          console.log(res);
+        }
+      });
+    }
   }, []);
 
   const handleSubmit = (e) => {
