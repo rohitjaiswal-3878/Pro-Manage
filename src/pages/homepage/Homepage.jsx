@@ -10,7 +10,7 @@ import analyticsIcon from "../../assets/analytics.svg";
 import settingsIcon from "../../assets/settings.svg";
 import logoutIcon from "../../assets/Logout.svg";
 import { useState } from "react";
-import ConfirmBox from "../../utils/confirmBox";
+import ConfirmBox from "../../utils/ConfirmBox";
 
 function Homepage() {
   const { state } = useLocation();
