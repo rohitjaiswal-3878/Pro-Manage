@@ -95,6 +95,7 @@
     font-size: 1.05rem;
     line-break: word;
     white-space: wrap;
+    word-break: break-all;
     width: 100%;
   }
 
@@ -124,7 +125,7 @@
       padding: 9px 12px;
       border-radius: 10px;
       border: 1.2px solid #e2e2e2;
-      white-space: wrap;
+      white-space: normal;
 
       .customCheckbox {
         position: relative;

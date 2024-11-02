@@ -69,6 +69,7 @@
 }
 
 .tooltip .tooltiptext {
+  z-index: 4;
   visibility: hidden;
   background-color: #424242;
   color: rgb(223, 223, 223);
